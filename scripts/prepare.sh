@@ -14,13 +14,7 @@ EOT
 
 # Add source file to src dir
 cat <<EOT > src/day_$1.cpp
-#include <array>
-#include <fstream>
-#include <iostream>
-#include <map>
-#include <set>
-#include <string>
-#include <vector>
+#include "common.hpp"
 
 using namespace std;
 
