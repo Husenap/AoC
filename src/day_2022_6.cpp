@@ -9,7 +9,7 @@
 using namespace std;
 
 int main() {
-  ifstream in("day_6");
+  ifstream in("day_2022_6");
 
   std::string message;
   in >> message;

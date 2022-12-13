@@ -26,7 +26,7 @@ struct Directory {
 };
 
 int main() {
-  ifstream in("day_7");
+  ifstream in("day_2022_7");
 
   std::map<std::filesystem::path, Directory> dirs;
   dirs["/"] = Directory{};

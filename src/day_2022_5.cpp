@@ -9,7 +9,7 @@
 using namespace std;
 
 int main() {
-  ifstream in("day_5");
+  ifstream in("day_2022_5");
 
   std::vector<std::string> lines;
   std::string              line;

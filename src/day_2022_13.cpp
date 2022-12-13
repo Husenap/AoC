@@ -89,7 +89,7 @@ Element parse(std::string_view text) {
 }
 
 int main() {
-  ifstream in("day_13");
+  ifstream in("day_2022_13");
 
   std::string left;
   std::string right;

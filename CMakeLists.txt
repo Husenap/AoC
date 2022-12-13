@@ -1,5 +1,8 @@
 cmake_minimum_required(VERSION 3.25)
-project(AoC)
+project(AoC
+  LANGUAGES CXX)
+
+add_compile_options(-std=c++20)
 
 enable_testing()
 

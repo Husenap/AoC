@@ -9,7 +9,7 @@
 using namespace std;
 
 int main() {
-  ifstream in("day_4");
+  ifstream in("day_2022_4");
 
   int contained   = 0;
   int overlapping = 0;

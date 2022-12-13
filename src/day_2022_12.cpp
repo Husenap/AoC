@@ -59,7 +59,7 @@ int shortestPath(Coord start, Coord end, const std::vector<std::string>& grid) {
 }
 
 int main() {
-  ifstream in("day_12");
+  ifstream in("day_2022_12");
 
   Coord start, end;
 

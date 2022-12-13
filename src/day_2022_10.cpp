@@ -9,7 +9,7 @@
 using namespace std;
 
 int main() {
-  ifstream in("day_10");
+  ifstream in("day_2022_10");
 
   std::vector<std::string> pixels(6, std::string(40, '.'));
 
