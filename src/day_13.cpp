@@ -94,37 +94,35 @@ int main() {
   std::string left;
   std::string right;
 
-  std::vector<std::pair<Element, Element>> pairs;
-
   std::vector<Element> allPackets;
 
   while (std::getline(in, left)) {
     std::getline(in, right);
 
-    pairs.emplace_back(parse(left), parse(right));
-    allPackets.push_back(pairs.back().first);
-    allPackets.push_back(pairs.back().second);
+    allPackets.push_back(parse(left));
+    allPackets.push_back(parse(right));
 
     std::getline(in, left);
   }
 
-  allPackets.push_back(parse("[[2]]"));
-  allPackets.push_back(parse("[[6]]"));
-
   int sum   = 0;
   int index = 0;
-  for (const auto& [left, right] : pairs) {
+  for (int i = 0; i < allPackets.size(); i += 2) {
     ++index;
+    const auto& left  = allPackets[i];
+    const auto& right = allPackets[i + 1];
     if (left < right) sum += index;
   }
 
   cout << "Count: " << sum << endl;
 
+  allPackets.push_back(parse("[[2]]"));
+  allPackets.push_back(parse("[[6]]"));
   std::sort(allPackets.begin(), allPackets.end());
   int prod = 1;
   for (int i = 0; i < allPackets.size(); ++i) {
     if (allPackets[i].originalText == "[[2]]" || allPackets[i].originalText == "[[6]]")
-      prod *= (i + 1);
+      prod *= i + 1;
   }
   cout << "Prod: " << prod << endl;
 
