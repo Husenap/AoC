@@ -3,6 +3,8 @@ project(AoC
   LANGUAGES CXX)
 
 add_compile_options(-std=c++20)
+add_compile_options(-fopenmp)
+link_libraries(-fopenmp)
 
 enable_testing()
 
