@@ -1,12 +1,4 @@
-#include <array>
-#include <cstdint>
-#include <fstream>
-#include <functional>
-#include <iostream>
-#include <map>
-#include <set>
-#include <string>
-#include <vector>
+#include "common.hpp"
 
 using namespace std;
 
@@ -47,8 +39,10 @@ int main() {
       monkey.items.clear();
     }
   }
-  for (auto& monkey : monkeys) {
-    cerr << monkey.inspections << endl;
-  }
-  return 1;
+  std::sort(monkeys.begin(), monkeys.end(), [](auto& a, auto& b) {
+    return a.inspections > b.inspections;
+  });
+  Int prod = monkeys[0].inspections * monkeys[1].inspections;
+  expectEq(prod, 51382025916);
+  return 0;
 }

@@ -1,10 +1,4 @@
-#include <array>
-#include <fstream>
-#include <iostream>
-#include <map>
-#include <set>
-#include <string>
-#include <vector>
+#include "common.hpp"
 
 using namespace std;
 
@@ -67,8 +61,9 @@ int main() {
       if (covered == 4) --tot;
     }
   }
-  cerr << "visible trees: " << tot << endl;
-  cerr << "best scenic score: " << bestScenicScore << endl;
 
-  return 1;
+  expectEq(tot, 1676);
+  expectEq(bestScenicScore, 313200);
+
+  return 0;
 }

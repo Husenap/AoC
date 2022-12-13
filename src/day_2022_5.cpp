@@ -1,10 +1,4 @@
-#include <array>
-#include <fstream>
-#include <iostream>
-#include <map>
-#include <set>
-#include <string>
-#include <vector>
+#include "common.hpp"
 
 using namespace std;
 
@@ -46,10 +40,12 @@ int main() {
     }
   }
 
-  cout << "part 1: ";
-  for (const auto& stack : stacks1) cout << stack.back();
-  cout << "\npart 2: ";
-  for (const auto& stack : stacks2) cout << stack.back();
+  std::string part1, part2;
+  for (const auto& stack : stacks1) part1 += stack.back();
+  for (const auto& stack : stacks2) part2 += stack.back();
 
-  return 1;
+  expectEq(part1, "FJSRQCFTN");
+  expectEq(part2, "CJVLJQPHS");
+
+  return 0;
 }

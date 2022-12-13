@@ -1,10 +1,4 @@
-#include <array>
-#include <fstream>
-#include <iostream>
-#include <map>
-#include <set>
-#include <string>
-#include <vector>
+#include "common.hpp"
 
 using namespace std;
 
@@ -50,11 +44,13 @@ int main() {
       X += n;
     }
   }
-  cout << "signal: " << signal << endl;
+
+  expectEq(signal, 13220);
+
   cout << "screen: " << endl;
   for (const auto& row : pixels) {
     cout << row << endl;
   }
 
-  return 1;
+  return 0;
 }

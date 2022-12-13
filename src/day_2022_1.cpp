@@ -1,11 +1,4 @@
-#include <algorithm>
-#include <array>
-#include <fstream>
-#include <iostream>
-#include <map>
-#include <set>
-#include <string>
-#include <vector>
+#include "common.hpp"
 
 using namespace std;
 
@@ -26,9 +19,9 @@ int main() {
 
   std::sort(sums.begin(), sums.end());
 
-  int tot = sums[sums.size() - 1] + sums[sums.size() - 2] + sums[sums.size() - 3];
+  const int tot = sums[sums.size() - 1] + sums[sums.size() - 2] + sums[sums.size() - 3];
 
-  cout << tot << endl;
+  expectEq(tot, 203420);
 
-  return 1;
+  return 0;
 }

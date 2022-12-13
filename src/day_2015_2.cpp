@@ -25,5 +25,8 @@ int main() {
   cout << wrappingPaper << endl;
   cout << ribbon << endl;
 
-  return 1;
+  expectEq(wrappingPaper, 1598415);
+  expectEq(ribbon, 3812909);
+
+  return 0;
 }

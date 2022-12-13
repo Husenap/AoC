@@ -1,10 +1,4 @@
-#include <array>
-#include <fstream>
-#include <iostream>
-#include <map>
-#include <set>
-#include <string>
-#include <vector>
+#include "common.hpp"
 
 using namespace std;
 
@@ -56,8 +50,8 @@ int main() {
     }
   }
 
-  cout << score << endl;
-  cout << score2 << endl;
+  expectEq(score, 8933);
+  expectEq(score2, 11998);
 
-  return 1;
+  return 0;
 }

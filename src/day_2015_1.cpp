@@ -1,10 +1,4 @@
-#include <array>
-#include <fstream>
-#include <iostream>
-#include <map>
-#include <set>
-#include <string>
-#include <vector>
+#include "common.hpp"
 
 using namespace std;
 
@@ -17,10 +11,10 @@ int main() {
   for (int i = 0; i < line.size(); ++i) {
     floor += line[i] == '(' ? 1 : -1;
     if (floor < 0) {
-      cout << "Basement: " << (i + 1) << endl;
+      expectEq(i + 1, 1795);
       break;
     }
   }
 
-  return 1;
+  return 0;
 }

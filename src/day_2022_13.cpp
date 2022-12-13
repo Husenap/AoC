@@ -1,14 +1,4 @@
-#include <algorithm>
-#include <array>
-#include <fstream>
-#include <iostream>
-#include <map>
-#include <memory>
-#include <set>
-#include <sstream>
-#include <string>
-#include <variant>
-#include <vector>
+#include "common.hpp"
 
 using namespace std;
 
@@ -53,18 +43,14 @@ struct Element {
 };
 
 Element parse(std::istream& text);
-
 Element parseList(std::istream& text) {
   text.get();  // skip [
-
   std::vector<Element> items;
   while (text.peek() != ']') {
     items.push_back(parse(text));
     if (text.peek() == ',') text.get();
   }
-
   text.get();  // skip ]
-
   return Element{.value = items};
 }
 Element parseNumber(std::istream& text) {
@@ -72,7 +58,6 @@ Element parseNumber(std::istream& text) {
   text >> number;
   return Element{.value = number};
 }
-
 Element parse(std::istream& text) {
   if (text.peek() == '[') {
     return parseList(text);
@@ -91,17 +76,12 @@ Element parse(std::string_view text) {
 int main() {
   ifstream in("day_2022_13");
 
-  std::string left;
-  std::string right;
-
+  std::string          left, right;
   std::vector<Element> allPackets;
-
   while (std::getline(in, left)) {
     std::getline(in, right);
-
     allPackets.push_back(parse(left));
     allPackets.push_back(parse(right));
-
     std::getline(in, left);
   }
 
@@ -113,8 +93,7 @@ int main() {
     const auto& right = allPackets[i + 1];
     if (left < right) sum += index;
   }
-
-  cout << "Count: " << sum << endl;
+  expectEq(sum, 6070);
 
   allPackets.push_back(parse("[[2]]"));
   allPackets.push_back(parse("[[6]]"));
@@ -124,7 +103,7 @@ int main() {
     if (allPackets[i].originalText == "[[2]]" || allPackets[i].originalText == "[[6]]")
       prod *= i + 1;
   }
-  cout << "Prod: " << prod << endl;
+  expectEq(prod, 20758);
 
-  return 1;
+  return 0;
 }

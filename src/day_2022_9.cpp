@@ -1,10 +1,4 @@
-#include <array>
-#include <fstream>
-#include <iostream>
-#include <map>
-#include <set>
-#include <string>
-#include <vector>
+#include "common.hpp"
 
 using namespace std;
 
@@ -55,8 +49,8 @@ int main() {
         visited.insert(Ps.back());
       }
     }
-    cerr << "tail visited: " << visited.size() << endl;
+    expectEq(visited.size(), 2352);
   }
 
-  return 1;
+  return 0;
 }

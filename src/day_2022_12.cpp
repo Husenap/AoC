@@ -1,11 +1,4 @@
-#include <array>
-#include <fstream>
-#include <iostream>
-#include <map>
-#include <queue>
-#include <set>
-#include <string>
-#include <vector>
+#include "common.hpp"
 
 using namespace std;
 
@@ -81,15 +74,18 @@ int main() {
   }
 
   int best = 10000;
+#pragma omp parallel for
   for (int y = 0; y < grid.size(); ++y) {
+#pragma omp parallel for
     for (int x = 0; x < grid[y].size(); ++x) {
       if (grid[y][x] != 'a') continue;
       int next = shortestPath({x, y}, end, grid);
-      best     = std::min(next, best);
+#pragma omp critical
+      best = std::min(next, best);
     }
   }
 
-  cout << best << endl;
+  expectEq(best, 414);
 
-  return 1;
+  return 0;
 }

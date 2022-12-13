@@ -1,10 +1,4 @@
-#include <array>
-#include <fstream>
-#include <iostream>
-#include <map>
-#include <set>
-#include <string>
-#include <vector>
+#include "common.hpp"
 
 using namespace std;
 
@@ -29,8 +23,8 @@ int main() {
     if (!((a < c && b < c) || (a > d && b > d))) ++overlapping;
   }
 
-  cout << contained << endl;
-  cout << overlapping << endl;
+  expectEq(contained, 500);
+  expectEq(overlapping, 815);
 
-  return 1;
+  return 0;
 }

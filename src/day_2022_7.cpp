@@ -1,12 +1,6 @@
-#include <array>
 #include <filesystem>
-#include <fstream>
-#include <iostream>
-#include <map>
-#include <queue>
-#include <set>
-#include <string>
-#include <vector>
+
+#include "common.hpp"
 
 using namespace std;
 
@@ -18,8 +12,8 @@ struct Directory {
   std::vector<File>                  files;
   std::vector<std::filesystem::path> dirs;
   int                                getFileSize() {
-                                   int sum = 0;
-                                   for (auto& file : files) sum += file.size;
+    int sum = 0;
+    for (auto& file : files) sum += file.size;
     return sum;
   }
   int totalSize = 0;
@@ -93,8 +87,9 @@ int main() {
       bestDeletion = std::min(bestDeletion, dir.totalSize);
     }
   }
-  cerr << sum << endl;
-  cerr << bestDeletion << endl;
 
-  return 1;
+  expectEq(sum, 1428881);
+  expectEq(bestDeletion, 10475598);
+
+  return 0;
 }

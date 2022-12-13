@@ -1,11 +1,4 @@
-#include <algorithm>
-#include <array>
-#include <fstream>
-#include <iostream>
-#include <map>
-#include <set>
-#include <string>
-#include <vector>
+#include "common.hpp"
 
 using namespace std;
 
@@ -62,8 +55,8 @@ int main() {
     group = (group + 1) % 3;
   }
 
-  cout << sum << endl;
-  cout << groupSum << endl;
+  expectEq(sum, 8105);
+  expectEq(groupSum, 2363);
 
-  return 1;
+  return 0;
 }

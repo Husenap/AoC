@@ -1,10 +1,4 @@
-#include <array>
-#include <fstream>
-#include <iostream>
-#include <map>
-#include <set>
-#include <string>
-#include <vector>
+#include "common.hpp"
 
 using namespace std;
 
@@ -22,8 +16,10 @@ int main() {
           sfd.insert(message[s]);
         }
       }
-      if (sfd.size() == 4) {
-        cout << "SFD: " << i + 1 << endl;
+      static bool flag = false;
+      if (!flag && sfd.size() == 4) {
+        flag = true;
+        expectEq(i + 1, 1566);
       }
     }
     {  // part 2
@@ -34,11 +30,11 @@ int main() {
         }
       }
       if (sfd.size() == 14) {
-        cout << "SFM: " << i + 1 << endl;
+        expectEq(i + 1, 2265);
         break;
       }
     }
   }
 
-  return 1;
+  return 0;
 }
