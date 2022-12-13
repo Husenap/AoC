@@ -3,7 +3,7 @@
 using namespace std;
 
 int main() {
-  ifstream in("day_2015_2");
+  ifstream in("day_2015_02");
 
   int  a, b, c;
   char x;

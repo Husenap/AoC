@@ -12,7 +12,7 @@ int gameScore(int me, int you) {
 }
 
 int main() {
-  ifstream in("day_2022_2");
+  ifstream in("day_2022_02");
 
   char a, b;
   int  score  = 0;

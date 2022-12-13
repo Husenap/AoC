@@ -21,9 +21,10 @@ using namespace std;
 int main() {
   ifstream in("day_$1");
 
-  cout << "answer" << endl;
+  int answer = 42;
+  expectEq(answer, 0);
 
-  return 1;
+  return 0;
 }
 EOT
 

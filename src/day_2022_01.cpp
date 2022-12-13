@@ -3,7 +3,7 @@
 using namespace std;
 
 int main() {
-  ifstream in("day_2022_1");
+  ifstream in("day_2022_01");
 
   std::string      line;
   int              sum = 0;

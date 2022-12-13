@@ -3,7 +3,7 @@
 using namespace std;
 
 int main() {
-  ifstream in("day_2022_6");
+  ifstream in("day_2022_06");
 
   std::string message;
   in >> message;

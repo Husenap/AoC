@@ -10,7 +10,7 @@ int priority(char c) {
 }
 
 int main() {
-  ifstream in("day_2022_3");
+  ifstream in("day_2022_03");
 
   std::string line;
   int         sum = 0;

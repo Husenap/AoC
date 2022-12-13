@@ -12,7 +12,7 @@ static const std::map<char, Pos> Delta = {{
 }};
 
 int main() {
-  ifstream in("day_2022_9");
+  ifstream in("day_2022_09");
 
   {
     std::array<Pos, 10> Ps;
