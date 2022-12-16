@@ -16,10 +16,8 @@ EOT
 cat <<EOT > src/day_$1.cpp
 #include "common.hpp"
 
-using namespace std;
-
 int main() {
-  ifstream in("day_$1");
+  std::ifstream in("day_$1");
 
   int answer = 42;
   expectEq(answer, 0);
