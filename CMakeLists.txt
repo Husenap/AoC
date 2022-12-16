@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.22)
 project(AoC
   LANGUAGES CXX)
 
-add_compile_options(-std=c++20)
+add_compile_options(-std=c++23)
 add_compile_options(-fopenmp)
 link_libraries(-fopenmp)
 
