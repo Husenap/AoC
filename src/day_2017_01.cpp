@@ -18,7 +18,7 @@ int main() {
     for (int i = 0; i < line.size(); ++i) {
       if (line[i] == line[(i + line.size() / 2) % line.size()]) sum += line[i] - '0';
     }
-    expectEq(sum, 0);
+    expectEq(sum, 1064);
   }
 
   return 0;
