@@ -12,8 +12,12 @@ add_test(NAME day_$1 COMMAND day_$1 WORKING_DIRECTORY \${CMAKE_SOURCE_DIR}/input
 EOT
 
 
+# Prepare input file
+touch input/day_$1
+
+
 # Add source file to src dir
-cat <<EOT > src/day_$1.cpp
+cat <<EOT >> src/day_$1.cpp
 #include "common.hpp"
 
 int main() {
@@ -26,6 +30,3 @@ int main() {
 }
 EOT
 
-
-# Prepare input file
-touch input/day_$1
