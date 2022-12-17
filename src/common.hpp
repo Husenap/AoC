@@ -16,4 +16,5 @@
 #include <vector>
 
 #include "expect.hpp"
+#include "format.hpp"
 #include "split.hpp"
