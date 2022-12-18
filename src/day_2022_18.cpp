@@ -16,16 +16,14 @@ int main() {
 
   std::set<Coord> cubes;
 
-  int  x, y, z;
-  char garbage;
-
   Coord min{100, 100, 100};
   Coord max{0, 0, 0};
   auto& [minX, minY, minZ] = min;
   auto& [maxX, maxY, maxZ] = max;
 
+  int  x, y, z;
+  char garbage;
   while (in >> x >> garbage >> y >> garbage >> z) {
-    shared::format_to(std::cerr, "({},{},{})\n", x, y, z);
     cubes.insert({x, y, z});
 
     minX = std::min(minX, x);
