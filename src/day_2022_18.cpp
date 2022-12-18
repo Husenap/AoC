@@ -14,13 +14,29 @@ static constexpr std::array<Coord, 6> Directions{{
 int main() {
   std::ifstream in("day_2022_18");
 
-  using Memo = std::array<std::array<std::array<int_fast32_t, 22>, 22>, 22>;
+  using Memo = std::array<std::array<std::array<int_fast8_t, 22>, 22>, 22>;
   Memo cubes{};
 
   int minX = 100, minY = 100, minZ = 100;
   int maxX = 0, maxY = 0, maxZ = 0;
 
-  const auto calcSurfaceArea = [&cubes] {
+  int  x, y, z;
+  char garbage;
+  while (in >> x >> garbage >> y >> garbage >> z) {
+    ++x;
+    ++y;
+    ++z;
+    cubes[x][y][z] = 1;
+
+    minX = std::min(minX, x - 1);
+    minY = std::min(minY, y - 1);
+    minZ = std::min(minZ, z - 1);
+    maxX = std::max(maxX, x + 1);
+    maxY = std::max(maxY, y + 1);
+    maxZ = std::max(maxZ, z + 1);
+  }
+
+  {
     int surfaceArea = 0;
     for (int x = 1; x <= 20; ++x) {
       for (int y = 1; y <= 20; ++y) {
@@ -31,75 +47,34 @@ int main() {
         }
       }
     }
-    return surfaceArea;
-  };
-
-  int  x, y, z;
-  char garbage;
-  while (in >> x >> garbage >> y >> garbage >> z) {
-    ++x;
-    ++y;
-    ++z;
-    cubes[x][y][z] = 1;
-
-    minX = std::min(minX, x);
-    minY = std::min(minY, y);
-    minZ = std::min(minZ, z);
-    maxX = std::max(maxX, x);
-    maxY = std::max(maxY, y);
-    maxZ = std::max(maxZ, z);
+    expectEq(surfaceArea, 3542);
   }
-  expectEq(calcSurfaceArea(), 3542);
 
-  Memo visited{};
-  for (int x = 1; x <= 20; ++x) {
-    for (int y = 1; y <= 20; ++y) {
-      for (int z = 1; z <= 20; ++z) {
-        if (!cubes[x][y][z]) continue;
-        for (const auto [dx, dy, dz] : Directions) {
-          const int rx = x + dx;
-          const int ry = y + dy;
-          const int rz = z + dz;
-          Coord     root{rx, ry, rz};
-          if (rx < minX || ry < minY || rz < minZ || rx > maxX || ry > maxY || rz > maxZ) continue;
-          if (visited[rx][ry][rz]) continue;
+  {
+    int               surfaceArea = 0;
+    Memo              visited{};
+    std::queue<Coord> q;
+    q.push({0, 0, 0});
+    while (!q.empty()) {
+      const auto [x, y, z] = q.front();
+      q.pop();
+      if (visited[x][y][z]) continue;
+      visited[x][y][z] = 1;
 
-          std::queue<Coord>  q;
-          std::vector<Coord> blob;
-          q.push(root);
-          blob.push_back(root);
-
-          bool exposed = false;
-          while (!q.empty()) {
-            const auto [x, y, z] = q.front();
-            q.pop();
-
-            for (const auto [dx, dy, dz] : Directions) {
-              const int nx = x + dx;
-              const int ny = y + dy;
-              const int nz = z + dz;
-              if (nx < minX || ny < minY || nz < minZ || nx > maxX || ny > maxY || nz > maxZ) {
-                exposed = true;
-                continue;
-              }
-              const Coord next{nx, ny, nz};
-              if (cubes[nx][ny][nz]) continue;
-              if (visited[nx][ny][nz]) continue;
-              visited[nx][ny][nz] = true;
-              blob.push_back(next);
-              q.push(next);
-            }
-          }
-
-          if (!exposed) {
-            for (auto [x, y, z] : blob) {
-              cubes[x][y][z] = 1;
-            }
-          }
-        }
+      for (const auto [dx, dy, dz] : Directions) {
+        const int nx = x + dx;
+        const int ny = y + dy;
+        const int nz = z + dz;
+        if (nx < minX || ny < minY || nz < minZ || nx > maxX || ny > maxY || nz > maxZ) continue;
+        if (visited[nx][ny][nz]) continue;
+        if (cubes[nx][ny][nz])
+          ++surfaceArea;
+        else
+          q.push({nx, ny, nz});
       }
     }
+    expectEq(surfaceArea, 2080);
   }
-  expectEq(calcSurfaceArea(), 2080);
+
   return 0;
 }

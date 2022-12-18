@@ -2,8 +2,7 @@ cmake_minimum_required(VERSION 3.22)
 project(AoC
   LANGUAGES CXX)
 
-add_compile_options(-std=c++23)
-add_compile_options(-fopenmp)
+add_compile_options(-std=c++23 -fopenmp)
 link_libraries(-fopenmp)
 
 enable_testing()
