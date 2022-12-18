@@ -22,7 +22,7 @@ int main() {
       verticalTriangles += a + b > c && a + c > b && b + c > a;
     }
   }
-  expectEq(verticalTriangles, 1837);
+  expectEq(verticalTriangles, 1838);
 
   return 0;
 }
