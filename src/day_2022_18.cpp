@@ -14,17 +14,33 @@ static constexpr std::array<Coord, 6> Directions{{
 int main() {
   std::ifstream in("day_2022_18");
 
-  std::set<Coord> cubes;
+  using Memo = std::array<std::array<std::array<int_fast32_t, 22>, 22>, 22>;
+  Memo cubes{};
 
-  Coord min{100, 100, 100};
-  Coord max{0, 0, 0};
-  auto& [minX, minY, minZ] = min;
-  auto& [maxX, maxY, maxZ] = max;
+  int minX = 100, minY = 100, minZ = 100;
+  int maxX = 0, maxY = 0, maxZ = 0;
+
+  const auto calcSurfaceArea = [&cubes] {
+    int surfaceArea = 0;
+    for (int x = 1; x <= 20; ++x) {
+      for (int y = 1; y <= 20; ++y) {
+        for (int z = 1; z <= 20; ++z) {
+          surfaceArea +=
+              cubes[x][y][z] * (6 - cubes[x - 1][y][z] - cubes[x + 1][y][z] - cubes[x][y - 1][z] -
+                                cubes[x][y + 1][z] - cubes[x][y][z - 1] - cubes[x][y][z + 1]);
+        }
+      }
+    }
+    return surfaceArea;
+  };
 
   int  x, y, z;
   char garbage;
   while (in >> x >> garbage >> y >> garbage >> z) {
-    cubes.insert({x, y, z});
+    ++x;
+    ++y;
+    ++z;
+    cubes[x][y][z] = 1;
 
     minX = std::min(minX, x);
     minY = std::min(minY, y);
@@ -33,70 +49,57 @@ int main() {
     maxY = std::max(maxY, y);
     maxZ = std::max(maxZ, z);
   }
+  expectEq(calcSurfaceArea(), 3542);
 
-  {
-    int surfaceArea = 0;
-    for (auto [x, y, z] : cubes) {
-      int sides = 6;
-      for (auto [dx, dy, dz] : Directions) {
-        if (cubes.contains({x + dx, y + dy, z + dz})) --sides;
-      }
-      surfaceArea += sides;
-    }
-    expectEq(surfaceArea, 3542);
-  }
+  Memo visited{};
+  for (int x = 1; x <= 20; ++x) {
+    for (int y = 1; y <= 20; ++y) {
+      for (int z = 1; z <= 20; ++z) {
+        if (!cubes[x][y][z]) continue;
+        for (const auto [dx, dy, dz] : Directions) {
+          const int rx = x + dx;
+          const int ry = y + dy;
+          const int rz = z + dz;
+          Coord     root{rx, ry, rz};
+          if (rx < minX || ry < minY || rz < minZ || rx > maxX || ry > maxY || rz > maxZ) continue;
+          if (visited[rx][ry][rz]) continue;
 
-  std::set<Coord> visited;
-  for (auto [x, y, z] : cubes) {
-    for (auto [dx, dy, dz] : Directions) {
-      Coord root{x + dx, y + dy, z + dz};
-      if (cubes.contains(root)) continue;
-      if (visited.contains(root)) continue;
+          std::queue<Coord>  q;
+          std::vector<Coord> blob;
+          q.push(root);
+          blob.push_back(root);
 
-      std::queue<Coord> q;
-      std::set<Coord>   blob;
-      q.push(root);
-      blob.insert(root);
+          bool exposed = false;
+          while (!q.empty()) {
+            const auto [x, y, z] = q.front();
+            q.pop();
 
-      bool exposed = false;
-      while (!q.empty()) {
-        const auto [x, y, z] = q.front();
-        q.pop();
-
-        for (auto [dx, dy, dz] : Directions) {
-          Coord next{x + dx, y + dy, z + dz};
-          if (x < minX || y < minY || z < minZ || x > maxX || y > maxY || z > maxZ) {
-            exposed = true;
-            continue;
+            for (const auto [dx, dy, dz] : Directions) {
+              const int nx = x + dx;
+              const int ny = y + dy;
+              const int nz = z + dz;
+              if (nx < minX || ny < minY || nz < minZ || nx > maxX || ny > maxY || nz > maxZ) {
+                exposed = true;
+                continue;
+              }
+              const Coord next{nx, ny, nz};
+              if (cubes[nx][ny][nz]) continue;
+              if (visited[nx][ny][nz]) continue;
+              visited[nx][ny][nz] = true;
+              blob.push_back(next);
+              q.push(next);
+            }
           }
-          if (cubes.contains(next)) continue;
-          if (visited.contains(next)) continue;
-          visited.insert(next);
-          blob.insert(next);
-          q.push(next);
-        }
-      }
 
-      if (exposed) {
-      } else {
-        for (auto p : blob) {
-          cubes.insert(p);
+          if (!exposed) {
+            for (auto [x, y, z] : blob) {
+              cubes[x][y][z] = 1;
+            }
+          }
         }
       }
     }
   }
-
-  {
-    int surfaceArea = 0;
-    for (auto [x, y, z] : cubes) {
-      int sides = 6;
-      for (auto [dx, dy, dz] : Directions) {
-        if (cubes.contains({x + dx, y + dy, z + dz})) --sides;
-      }
-      surfaceArea += sides;
-    }
-    expectEq(surfaceArea, 2080);
-  }
-
+  expectEq(calcSurfaceArea(), 2080);
   return 0;
 }
