@@ -7,7 +7,8 @@ static void expectExitHandler() {
 }
 
 template <typename T, typename U>
-void expectEq(const T& value, const U& expected) {
+void _expectEq(
+    std::string_view file, int line, std::string_view svalue, const T& value, const U& expected) {
   static bool registeredHandler = false;
   if (!registeredHandler) {
     registeredHandler = true;
@@ -16,7 +17,11 @@ void expectEq(const T& value, const U& expected) {
 
   if (value == expected) return;
   hasFailed = true;
+  std::cerr << std::endl;
+  std::cerr << file << ":[" << line << "]: " << svalue << std::endl;
   std::cerr << "Expected equality between:" << std::endl;
   std::cerr << "   value: " << value << std::endl;
-  std::cerr << "expected: " << expected << std::endl;
+  std::cerr << "expected: " << expected << std::endl << std::endl;
 }
+
+#define expectEq(value, expected) _expectEq(__FILE__, __LINE__, #value, value, expected);
